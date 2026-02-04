@@ -99,7 +99,7 @@ export default function Hero() {
 
         {/* Video Container */}
         <div 
-          className={`video-container relative w-[92%] max-w-[1150px] md:w-[78%] transition-all duration-1000 ${
+          className={`video-container relative w-[98%] max-w-[1150px] md:w-[80%] transition-all duration-1000 ${
             isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.97]'
           }`}
         >
@@ -213,7 +213,7 @@ export default function Hero() {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <p className="text-[10px] leading-relaxed text-white/30 text-center">
+          <p className="text-[8px] md:text-[10px] leading-snug text-white/25 text-center max-w-[560px] mx-auto">
             Legal Disclaimer: This video contains third-party video footage, trademarks, and copyrighted materials owned by the Vegas Golden Knights, Las Vegas Raiders, Major League Soccer (MLS), and their respective affiliates, licensors, and rights holders. Such materials are used solely for informational, educational, and promotional purposes. No affiliation, endorsement, sponsorship, or approval by the aforementioned organizations is expressed or implied. All rights remain the property of their respective owners.
           </p>
         </div>
@@ -226,14 +226,14 @@ export default function Hero() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <span className="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+            <span className="text-sm md:text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
               MLS to Vegas
             </span>
           </div>
 
           {/* Headline */}
           <h1 
-            className={`mt-5 font-display text-3xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl transition-all duration-700 delay-[350ms] ${
+            className={`mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl transition-all duration-700 delay-[350ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
@@ -242,7 +242,7 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p 
-            className={`mt-5 text-base leading-relaxed text-white/60 md:text-lg md:leading-relaxed transition-all duration-700 delay-[500ms] ${
+            className={`mt-5 text-lg leading-relaxed text-white/60 md:text-lg md:leading-relaxed transition-all duration-700 delay-[500ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
@@ -266,18 +266,29 @@ export default function Hero() {
             </button>
             
             {/* Line 1 - Slightly larger, medium gray */}
-            <p className="mt-5 text-sm text-white/50 max-w-lg mx-auto text-center">
+            <p className="mt-10 text-sm text-white/50 max-w-lg mx-auto text-center">
               Your support helps demonstrate demand for elite development and long-term professional soccer in Las Vegas.
             </p>
             
             {/* Line 2 - Smaller, lighter gray */}
-            <p className="mt-3 text-xs text-white/35 max-w-xl mx-auto text-center">
+            <p className="mt-5 text-xs text-white/35 max-w-xl mx-auto text-center">
               Independent community initiative. No league approval or franchise has been granted.
             </p>
           </div>
 
+          {/* Inline Disclaimer - subtle, above final link */}
+          <div 
+            className={`mt-10 transition-all duration-700 delay-[900ms] ${
+              isVisible ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <p className="text-[10px] text-white/30 text-center max-w-md mx-auto">
+              Focused on MLS-aligned development pathways and infrastructure.
+            </p>
+          </div>
+
           {/* View Community Support (separated from disclaimers) */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <button
               onClick={scrollToMetrics}
               className="mt-3 text-[11px] text-white/25 hover:text-white/40 transition-colors text-center"
@@ -285,17 +296,6 @@ export default function Hero() {
               View Community Support ↓
             </button>
           </div>
-        </div>
-
-        {/* Inline Disclaimer - subtle, below hero content */}
-        <div 
-          className={`mt-12 transition-all duration-700 delay-[900ms] ${
-            isVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <p className="text-[10px] text-white/30 text-center max-w-md mx-auto">
-            Focused on MLS-aligned development pathways and infrastructure.
-          </p>
         </div>
       </div>
     </section>

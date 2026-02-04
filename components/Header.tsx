@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +63,7 @@ export default function Header() {
           </Link>
 
           {/* Navigation - Absolute right */}
-          <nav className="absolute right-0 flex items-center gap-1 md:gap-2">
+          <nav className="absolute right-0 hidden md:flex items-center gap-1 md:gap-2">
             <button
               onClick={() => scrollToSection('metrics')}
               className="px-3 py-1.5 text-xs font-medium text-white/70 hover:text-white transition-colors rounded-sm hover:bg-white/10"
@@ -82,7 +83,53 @@ export default function Header() {
               Contact
             </Link>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="absolute right-0 inline-flex items-center justify-center p-2 text-white/80 hover:text-white md:hidden"
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu Panel */}
+        {isMenuOpen && (
+          <div className="md:hidden pb-3">
+            <div className="mt-2 rounded-sm border border-white/10 bg-navy/95 backdrop-blur-md p-3">
+              <button
+                onClick={() => {
+                  scrollToSection('metrics')
+                  setIsMenuOpen(false)
+                }}
+                className="block w-full text-left px-3 py-2 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-sm"
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => {
+                  scrollToSection('registry-form')
+                  setIsMenuOpen(false)
+                }}
+                className="mt-1 block w-full text-left px-3 py-2 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-sm"
+              >
+                Support
+              </button>
+              <Link
+                href="/contact"
+                className="mt-1 block w-full text-left px-3 py-2 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-sm"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   )
