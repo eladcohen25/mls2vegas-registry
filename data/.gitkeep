@@ -1,0 +1,3 @@
+# Data directory for local storage
+# This directory is ignored in production
+# Files: registrations.json, contacts.json, metrics.json
