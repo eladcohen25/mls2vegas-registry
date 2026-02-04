@@ -13,7 +13,7 @@ type RegistrationStats = {
 }
 
 interface MetricCardProps {
-  value: number
+  value: number | null
   label: string
   description: string
 }
@@ -25,7 +25,7 @@ function MetricCard({ value, label, description }: MetricCardProps) {
         className="counter-value text-5xl font-bold text-navy md:text-6xl lg:text-7xl tracking-tight transition-all duration-300"
         style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em' }}
       >
-        {formatNumber(value)}
+        {value === null ? '—' : formatNumber(value)}
       </div>
       <div className="mt-4 text-sm font-semibold text-primary-800 uppercase tracking-wide">
         {label}
@@ -42,12 +42,8 @@ interface MetricsProps {
 }
 
 export default function Metrics({ variant = 'default' }: MetricsProps) {
-  const [stats, setStats] = useState<RegistrationStats>({
-    supportersCount: 252,
-    youthParentsCount: 115,
-    businessesCount: 115,
-  })
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+  const [stats, setStats] = useState<RegistrationStats | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const resyncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const fetchStats = async () => {
@@ -80,13 +76,17 @@ export default function Metrics({ variant = 'default' }: MetricsProps) {
 
       // Optimistic update (no API call)
       if (submissionType === 'community_registry') {
-        setStats((prev) => ({
-          supportersCount: prev.supportersCount + 1,
-          youthParentsCount:
-            prev.youthParentsCount + (role && YOUTH_ROLES.has(role) ? 1 : 0),
-          businessesCount: prev.businessesCount + (role === 'business_owner' ? 1 : 0),
-        }))
-        setLastUpdated(new Date())
+        setStats((prev) => {
+          if (!prev) return prev
+          const next = {
+            supportersCount: prev.supportersCount + 1,
+            youthParentsCount:
+              prev.youthParentsCount + (role && YOUTH_ROLES.has(role) ? 1 : 0),
+            businessesCount: prev.businessesCount + (role === 'business_owner' ? 1 : 0),
+          }
+          setLastUpdated(new Date())
+          return next
+        })
       }
 
       // Debounced resync after 3s (avoid overload on rapid submissions)
@@ -113,19 +113,19 @@ export default function Metrics({ variant = 'default' }: MetricsProps) {
       <div className="grid grid-cols-3 gap-4 md:gap-8">
         <div className="text-center">
           <div className="counter-value text-3xl font-bold text-navy md:text-4xl tracking-tight">
-            {formatNumber(stats.supportersCount)}
+            {stats ? formatNumber(stats.supportersCount) : '—'}
           </div>
           <div className="mt-1 text-xs text-primary-600 font-medium">Supporters</div>
         </div>
         <div className="text-center">
           <div className="counter-value text-3xl font-bold text-navy md:text-4xl tracking-tight">
-            {formatNumber(stats.youthParentsCount)}
+            {stats ? formatNumber(stats.youthParentsCount) : '—'}
           </div>
           <div className="mt-1 text-xs text-primary-600 font-medium">Youth</div>
         </div>
         <div className="text-center">
           <div className="counter-value text-3xl font-bold text-navy md:text-4xl tracking-tight">
-            {formatNumber(stats.businessesCount)}
+            {stats ? formatNumber(stats.businessesCount) : '—'}
           </div>
           <div className="mt-1 text-xs text-primary-600 font-medium">Businesses</div>
         </div>
@@ -163,17 +163,17 @@ export default function Metrics({ variant = 'default' }: MetricsProps) {
             
             <div className="relative grid gap-0 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-primary-100">
               <MetricCard
-                value={stats.supportersCount}
+                value={stats ? stats.supportersCount : null}
                 label="Registered Supporters"
                 description="Community members committed to the pathway"
               />
               <MetricCard
-                value={stats.youthParentsCount}
+                value={stats ? stats.youthParentsCount : null}
                 label="Youth Players & Parents"
                 description="Families invested in development"
               />
               <MetricCard
-                value={stats.businessesCount}
+                value={stats ? stats.businessesCount : null}
                 label="Registered Businesses"
                 description="Local organizations ready to partner"
               />
@@ -191,11 +191,11 @@ export default function Metrics({ variant = 'default' }: MetricsProps) {
             <span className="text-xs font-medium text-primary-600">LIVE</span>
             <span className="text-xs text-primary-400">•</span>
             <span className="text-xs text-primary-500">
-              Last updated: {lastUpdated.toLocaleDateString('en-US', { 
+              Last updated: {lastUpdated ? lastUpdated.toLocaleDateString('en-US', { 
                 month: 'numeric', 
                 day: 'numeric', 
                 year: 'numeric' 
-              })}
+              }) : '—'}
             </span>
           </div>
         </div>

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const YOUTH_ROLES = ['player', 'parent', 'youth_player', 'youth_parent'] as const
 const BUSINESS_ROLE = 'business_owner' as const
 
