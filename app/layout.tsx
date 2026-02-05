@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   description: 'A community-backed initiative to strengthen player development and MLS-aligned pathways in Southern Nevada. Join the registry to support elite development, facilities, and long-term MLS integration.',
   keywords: ['MLS', 'Las Vegas', 'soccer', 'youth development', 'MLS NEXT Pro', 'player pathway', 'Southern Nevada'],
   authors: [{ name: 'MLS to Vegas Initiative' }],
+  icons: {
+    icon: '/Logo/favicon%20mls%20to%20vegas.png',
+  },
   openGraph: {
     title: 'MLS to Vegas | Building the MLS Pathway in Las Vegas',
     description: 'A community-backed initiative to strengthen player development and MLS-aligned pathways in Southern Nevada.',
